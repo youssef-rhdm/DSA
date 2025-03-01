@@ -6,7 +6,7 @@
 /*   By: yrhandou <yrhandou@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:06:12 by yrhandou          #+#    #+#             */
-/*   Updated: 2025/02/17 15:34:34 by yrhandou         ###   ########.fr       */
+/*   Updated: 2025/02/18 17:29:57 by yrhandou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,47 @@ void push_int(stack *s, int value)
 	s->top = +1;
 	s->data[s->top] = value;
 }
-
-int main(int argc, char *argv[])
+void lst_addfront(t_stack **lst, int data)
 {
-	int i = 0;
-	stack arr;
+	t_stack *new_node = malloc(sizeof(t_stack));
+	new_node->data = data;
+	new_node->next = (*lst);
+	(*lst) = new_node;
+}
+int main(int argc, char **argv)
+{
 
-	arr.top = -1;
-	while (argv[i])
+	t_stack *head = malloc(sizeof(t_stack));
+	head->data = atoi(argv[1]);
+	head->next = NULL;
+	t_stack *tmp;
+	tmp = head;
+	int i = 2;
+	t_stack *new_node;
+	while (i < argc)
 	{
-		push_int(&arr, atoi(argv[i]));
+		new_node = malloc(sizeof(t_stack));
+		new_node->data = atoi(argv[i]);
+		new_node->next = NULL;
+		tmp->next = new_node;
+		tmp = new_node;
 		i++;
 	}
-	while(i>-1)
+
+	tmp = head;
+	while (tmp)
 	{
-		printf("%d", arr.data[i]);
-		i--;
+		printf("%d\n", tmp->data);
+		tmp = tmp->next;
+	}
+	tmp = head;
+	lst_addfront(&tmp, 0);
+	printf("\n\n");
+	// tmp = head;
+	while (tmp)
+	{
+		printf("%d\n", tmp->data);
+		tmp = tmp->next;
 	}
 
 	return 0;
